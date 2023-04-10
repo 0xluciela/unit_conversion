@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Unit Conversion</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    function default_process_input(unit_type) {
+		let request = new XMLHttpRequest();
+
+		request.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				responseText = this.responseText;
+				document.getElementById(`default_${unit_type}_output`).value = responseText;
+			}
+		}
+
+		let value = document.getElementById(`default_${unit_type}_input`).value;
+		let old_unit = document.getElementById(`default_${unit_type}1`).value;
+		let new_unit = document.getElementById(`default_${unit_type}2`).value;
+
+		request.open("GET", `/convert/default/value/${value}/old_unit/${old_unit}/new_unit/${new_unit}/unit_type/${unit_type}`, true);
+		request.send();
+    }
+
+    function addsub_process_input(unit_type) {
+        let request = new XMLHttpRequest();
+
+        request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                responseText = this.responseText;
+				const output = responseText.split("&");
+                document.getElementById(`addsub_${unit_type}_output1`).innerHTML = output[0];
+				document.getElementById(`addsub_${unit_type}_output2`).innerHTML = output[1];
+            }
+        }
+
+		let operation = document.getElementById(`${unit_type}_operation`).value;
+		let value1 = document.getElementById(`addsub_${unit_type}_input1`).value;
+		let value2 = document.getElementById(`addsub_${unit_type}_input2`).value;
+		let unit1 = document.getElementById(`addsub_${unit_type}1`).value;
+		let unit2 = document.getElementById(`addsub_${unit_type}2`).value;
+
+        request.open("GET", `/convert/addsub/operation/${operation}/value1/${value1}/value2/${value2}/unit1/${unit1}/unit2/${unit2}/unit_type/${unit_type}`, true);
+        request.send();
+    }
+</script>
+</head>
+<body>
+<div id="menu"></div>
+<div id="wrapper">
+<div id="content">
+    <div id="posts">
+
+
+
+      	<div class="post"><br>
+			<h2 class="title">Convert Lengths</h2>
+			<form>
+				Convert
+				<input type="number" id="default_length_input" size="10">
+				<select id="default_length1">
+					<option value="inches">inches</option>
+					<option value="feet">feet</option>
+					<option value="miles">miles</option>
+					<option value="micrometers">micrometers</option>
+					<option value="millimeters">millimeters</option>
+					<option value="centimeters">centimeters</option>
+					<option value="meters">meters</option>
+					<option value="kilometers">kilometers</option>
+				</select>
+				to
+				<input type="number" id="default_length_output" size="10" disabled="disabled">
+				<select id="default_length2">
+					<option value="inches">inches</option>
+					<option value="feet">feet</option>
+					<option value="miles">miles</option>
+					<option value="micrometers">micrometers</option>
+					<option value="millimeters">millimeters</option>
+					<option value="centimeters">centimeters</option>
+					<option value="meters">meters</option>
+					<option value="kilometers">kilometers</option>
+				</select>
+				<button onclick="default_process_input('length'); return false;">Compute</button>
+			</form>
+      	</div>
+
+
+
+      	<div class="post">
+        	<h2 class="title">Add/Subtract Lengths</h2>
+			<form>
+				<input type="number" id="addsub_length_input1" size="10">
+				<select id="addsub_length1">
+					<option value="inches">inches</option>
+					<option value="feet">feet</option>
+					<option value="miles">miles</option>
+					<option value="micrometers">micrometers</option>
+					<option value="millimeters">millimeters</option>
+					<option value="centimeters">centimeters</option>
+					<option value="meters">meters</option>
+					<option value="kilometers">kilometers</option>
+				</select>
+				<select id="length_operation">
+					<option value="+">+</option>
+					<option value="-">-</option>
+				</select>
+				<input type="number" id="addsub_length_input2" size="10">
+				<select id="addsub_length2">
+					<option value="inches">inches</option>
+					<option value="feet">feet</option>
+					<option value="miles">miles</option>
+					<option value="micrometers">micrometers</option>
+					<option value="millimeters">millimeters</option>
+					<option value="centimeters">centimeters</option>
+					<option value="meters">meters</option>
+					<option value="kilometers">kilometers</option>
+				</select>
+				<input type="checkbox" id="chkBox" value="1" onchange="addsub_process_input('length');">
+				<button onclick="addsub_process_input('length'); return false;">Compute</button>
+			</form>
+			<span id="addsub_length_output1"> </span><br>
+			<span id="addsub_length_output2"> </span><br>
+        </div>
+
+		<div class="post"><br>
+			<h2 class="title">Convert Mass</h2>
+			<form>
+				Convert
+				<input type="number" id="default_mass_input" size="10">
+				<select id="default_mass1">
+					<option value="ounces">ounces</option>
+					<option value="pounds">pounds</option>
+					<option value="US tons">US tons</option>
+					<option value="micrograms">micrograms</option>
+					<option value="milligrams">milligrams</option>
+					<option value="grams">grams</option>
+					<option value="kilograms">kilograms</option>
+					<option value="metric tons">metric tons</option>
+				</select>
+				to
+				<input type="number" id="default_mass_output" size="10" disabled="disabled">
+				<select id="default_mass2">
+					<option value="ounces">ounces</option>
+					<option value="pounds">pounds</option>
+					<option value="US tons">US tons</option>
+					<option value="micrograms">micrograms</option>
+					<option value="milligrams">milligrams</option>
+					<option value="grams">grams</option>
+					<option value="kilograms">kilograms</option>
+					<option value="metric tons">metric tons</option>
+				</select>
+				<button onclick="default_process_input('mass'); return false;">Compute</button>
+			</form>
+      	</div>
+
+
+
+      	<div class="post">
+        	<h2 class="title">Add/Subtract Mass</h2>
+			<form>
+				<input type="number" id="addsub_mass_input1" size="10">
+				<select id="addsub_mass1">
+					<option value="ounces">ounces</option>
+					<option value="pounds">pounds</option>
+					<option value="US tons">US tons</option>
+					<option value="micrograms">micrograms</option>
+					<option value="milligrams">milligrams</option>
+					<option value="grams">grams</option>
+					<option value="kilograms">kilograms</option>
+					<option value="metric tons">metric tons</option>
+				</select>
+				<select id="mass_operation">
+					<option value="+">+</option>
+					<option value="-">-</option>
+				</select>
+				<input type="number" id="addsub_mass_input2" size="10">
+				<select id="addsub_mass2">
+					<option value="ounces">ounces</option>
+					<option value="pounds">pounds</option>
+					<option value="US tons">US tons</option>
+					<option value="micrograms">micrograms</option>
+					<option value="milligrams">milligrams</option>
+					<option value="grams">grams</option>
+					<option value="kilograms">kilograms</option>
+					<option value="metric tons">metric tons</option>
+				</select>
+				<input type="checkbox" id="chkBox" value="1" onchange="addsub_process_input('mass');">
+				<button onclick="addsub_process_input('mass'); return false;">Compute</button>
+			</form>
+			<span id="addsub_mass_output1"> </span><br>
+			<span id="addsub_mass_output2"> </span><br>
+        </div>
+
+
+
+
+    </div>
+    <div style="clear: both;">&nbsp;</div>
+  	</div>
+</div>
+</body>
+</html>

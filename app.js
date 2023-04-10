@@ -3,19 +3,36 @@ const { digit_precision, results, length_conversions, mass_conversions, unit_typ
 let express = require('express');
 
 let app = express();
-app.get('/convert/milesToKilometers/input/:inputValue/type/:unitType', (req, res) => {
+app.use(express.static('public'));
 
-    const miles = parseFloat(req.params.inputValue);
-    let kilos = conversion.do_conversion(miles, "miles", "kilometers", length_conversions);
-    res.send(`${miles} miles is equal to ${kilos} kilometers.`);
+app.get('/convert/default/value/:value/old_unit/:old_unit/new_unit/:new_unit/unit_type/:unit_type', (req, res) => {
+
+    let value = parseFloat(req.params.value);
+    let old_unit = req.params.old_unit;
+    let new_unit = req.params.new_unit;
+    let unit_type = req.params.unit_type;
+
+    let output = conversion.do_conversion(value, old_unit, new_unit, unit_type_to_conversion_map[unit_type]);
+    output = conversion.round(output);
+    res.send(`${output}`);
 });
   
-app.get('/convert/milesToKilometers/input1/:inputValue1/type1/:unitType1/input2/:inputValue2/type2/:unitType2/targetUnit/:targetUnit', (req, res) => {
+app.get('/convert/addsub/operation/:operation/value1/:value1/value2/:value2/unit1/:unit1/unit2/:unit2/unit_type/:unit_type', (req, res) => {
     
-    const miles = parseFloat(req.params.inputValue1);
-    const kilometers = miles * 1.60934;
-    res.send(`${miles} miles ${kilos} kilometers is equal to ${kilos} kilometers.`);
-    res.send(`${miles} miles ${kilos} kilometers is equal to ${miles} miles.`);
+    let operation = req.params.operation;
+    let value1 = parseFloat(req.params.value1);
+    let value2 = parseFloat(req.params.value2);
+    let unit1 = req.params.unit1;
+    let unit2 = req.params.unit2;
+    let unit_type = req.params.unit_type;
+
+    if (operation === "-") { value2 *= -1; }
+
+    let [output1, output2] = conversion.add_values(value1, value2, unit1, unit2, unit_type_to_conversion_map[unit_type]);
+    [output1, output2] = conversion.round(output1, output2);
+
+    // '&' is used to separate the strings
+    res.send(`${value1} ${unit1} + ${value2} ${unit2} is equal to ${output1} ${unit1}.&${value1} ${unit1} + ${value2} ${unit2} is equal to ${output2} ${unit2}.`);
 });
   
 app.listen(3000, () => {

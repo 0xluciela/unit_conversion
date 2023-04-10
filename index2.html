@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+<title>Unit Conversion</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="style2.css" rel="stylesheet" type="text/css" />
+<script src="App.js"></script>
+</head>
+<body>
+    <div class="center">
+        <h1>Unit Conversion</h1>
+        <form>
+            <div class="inputbox">
+                <input type="text" id="default_lengths_input" size="10">
+            
+            <select type="dropdown" id="default_lengths1">
+                <option value="inches">inches</option>
+                <option value="feet">feet</option>
+                <option value="micrometers">micrometers</option>
+                <option value="millimeters">millimeters</option>
+                <option value="centimeters">centimeters</option>
+                <option value="meters">meters</option>
+                <option value="kilometers">kilometers</option>
+            </select>
+        </div>
+            <div class="inputbox">
+                <input type="text" id="default_lengths_output" size="10" disabled="disabled">
+            </div>
+            <div class="inputbox">
+                <select type="dropdown" id="default_lengths2">
+                    <option value="inches">inches</option>
+                    <option value="feet">feet</option>
+                    <option value="micrometers">micrometers</option>
+                    <option value="millimeters">millimeters</option>
+                    <option value="centimeters">centimeters</option>
+                    <option value="meters">meters</option>
+                    <option value="kilometers">kilometers</option>
+                </select>
+            </div>
+            <div class="inputbox">
+                <input type="button" value="submit" onclick="default_process_input('length'); return false;">
+            </div>    
+        </form>
+    </div>
+</body>

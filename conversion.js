@@ -1,16 +1,17 @@
 // Digit precision across outputs; no intermediate rounding is performed
-const digit_precision = 6;
+const digit_precision = 5;
 
 // Selects the name of the result based on the operation
-const results = {"add": "sum", "subtract": "difference"};
+const results = {"+": "sum", "-": "difference"};
 
 // Hardcoded conversion rates from a given unit to meters
-const length_conversions = {"micrometers": 1e-6, "millimeters": 1e-3, "centimeters": 1e-2, "meters": 1, "kilometers": 1e3, 
-"inches": 0.0254, "feet": 0.3048, "yards": 0.9144, "miles": 1609};
+const length_conversions = {"inches": 0.0254, "feet": 0.3048, "yards": 0.9144, "miles": 1609.3,
+"micrometers": 1e-6, "millimeters": 1e-3, "centimeters": 1e-2, "meters": 1, "kilometers": 1e3};
 
 // Hardcoded conversion rates from a given unit to kilograms
-const mass_conversions = {"micrograms": 1e-9, "milligrams": 1e-6, "grams": 1e-3, "kilograms": 1, "metric_tons": 1e3, 
-"ounces": 0.02835, "pounds": 0.4536};
+const mass_conversions = {"ounces": 0.02835, "pounds": 0.4536, "US tons": 907.19,
+"micrograms": 1e-9, "milligrams": 1e-6, "grams": 1e-3, "kilograms": 1, "metric tons": 1e3}; 
+
 
 // Selects the conversion map based on the unit type
 const unit_type_to_conversion_map = {"length": length_conversions, "mass": mass_conversions};
@@ -92,7 +93,7 @@ function add_choose_unit_type(value1, value2, unit1, unit2, unit_type) {
 
 /* 
 
-Forces all inputs to be of number type for arithmetic
+Debug function; forces all inputs to be of number type for arithmetic
 
 Arguments
 ----------
@@ -108,7 +109,7 @@ function force_numbers(...nums) {
 
 /* 
 
-Forces all inputs to be of number type for arithmetic
+Rounds all inputs to the specified degree of precision
 
 Arguments
 ----------
@@ -132,7 +133,6 @@ unit_type: string, type of unit being converted
 */
 function default_process_input(unit_type) {
     process_input(unit_type, "default");
-    return;
 }
 
 /* 
@@ -144,14 +144,13 @@ Arguments
 unit_type: string, type of unit being converted
 
 */
-function addsum_process_input(unit_type) {
+function addsub_process_input(unit_type) {
     let operation = document.getElementById("operation").value;
     if (operation === "+") {
         process_input(unit_type, "add");
     } else if (operation === "-") {
         process_input(unit_type, "subtract");
     }
-    return;
 }
 
 /* 
@@ -205,7 +204,6 @@ function process_input(unit_type, conversion_type) {
         document.getElementById("add_lengths_output1").innerHTML = output_line1;
         document.getElementById("add_lengths_output2").innerHTML = output_line2;
     }
-    return;
 }
 
 module.exports = {
@@ -214,12 +212,13 @@ module.exports = {
     length_conversions,
     mass_conversions,
     unit_type_to_conversion_map,
+    add_values,
     do_conversion,
     add_choose_unit_type,
     force_numbers,
     round,
     default_process_input,
-    addsum_process_input,
+    addsub_process_input,
     process_input
 };
   
