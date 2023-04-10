@@ -36,23 +36,7 @@ function do_conversion(value, old_unit, new_unit, conversion_rates) {
 
 /* 
 
-Selects the correct list of constants for the default conversion based on the unit type
-
-Arguments
-----------
-value: number, numerical value representing the quantity of old_unit
-old_unit: string, unit being converted from
-new_unit: string, unit being converted to
-unit_type: string, type of unit being converted
-
-*/
-function default_choose_unit_type(value, old_unit, new_unit, unit_type) {
-    return do_conversion(value, old_unit, new_unit, unit_type_to_conversion_map[unit_type]);
-}
-
-/* 
-
-Selects the correct list of constants for adding two quantities based on the unit type
+Adds two quantities with potentially differing units
 
 Arguments
 ----------
@@ -71,24 +55,6 @@ function add_values(value1, value2, unit1, unit2, conversion_rates) {
     let unit2_sum = value2 + do_conversion(value1, unit1, unit2, conversion_rates)
 
     return [unit1_sum, unit2_sum];
-}
-
-/* 
-
-Selects the correct list of constants for adding two quantities based on the unit type
-
-Arguments
-----------
-value1: number, numerical value representing the quantity of unit1
-value2: number, numerical value representing the quantity of unit2
-unit1: string, unit in the first field
-unit2: string, unit in the second field
-unit_type: string, type of unit being converted
-
-*/
-
-function add_choose_unit_type(value1, value2, unit1, unit2, unit_type) {
-    return add_values(value1, value2, unit1, unit2, unit_type_to_conversion_map[unit_type]);
 }
 
 /* 
@@ -122,89 +88,6 @@ function round(...nums) {
     }
     return nums;
 }
-/* 
-
-Processes input for the default converion
-
-Arguments
-----------
-unit_type: string, type of unit being converted
-
-*/
-function default_process_input(unit_type) {
-    process_input(unit_type, "default");
-}
-
-/* 
-
-Processes input for adding or subtracting quantities
-
-Arguments
-----------
-unit_type: string, type of unit being converted
-
-*/
-function addsub_process_input(unit_type) {
-    let operation = document.getElementById("operation").value;
-    if (operation === "+") {
-        process_input(unit_type, "add");
-    } else if (operation === "-") {
-        process_input(unit_type, "subtract");
-    }
-}
-
-/* 
-
-Reads input, processes data, and writes output for all operations
-
-Arguments
-----------
-unit_type: string, type of unit being converted
-conversion_rates: map, hardcoded conversion rates determined by the type of unit
-
-*/
-function process_input(unit_type, conversion_type) {
-    if (conversion_type === "default") {
-        // Retrieves values for default conversion
-        let value = document.getElementById("default_lengths_input").value;
-        let old_unit = document.getElementById("default_lengths1").value;
-        let new_unit = document.getElementById("default_lengths2").value;
-
-        // Force all inputs to be of type number
-        [value] = force_numbers(value);
-
-        // Performs necessary computations
-        let output = default_choose_unit_type(value, old_unit, new_unit, unit_type);
-
-        // Write output
-        document.getElementById("default_lengths_output").value = round(output);
-    
-    } else if (conversion_type === "add" || conversion_type === "subtract") {
-        // Retrieves values for addition/subtraction
-        let value1 = document.getElementById("add_lengths_input1").value;
-        let value2 = document.getElementById("add_lengths_input2").value;
-        let unit1 = document.getElementById("add_lengths1").value;
-        let unit2 = document.getElementById("add_lengths2").value;
-
-        // Force all inputs to be of type number
-        [value1, value2] = force_numbers(value1, value2);
-        
-        // Subtracting is equivalent to adding the additive inverse
-        if (conversion_type === "subtract") { value2 *= -1; }
-        
-        // Performs necessary computations
-        let [output1, output2] = add_choose_unit_type(value1, value2, unit1, unit2, unit_type);
-
-        // Round outputs
-        [output1, output2] = round(output1, output2);
-
-        // Write output
-        let output_line1 = `The ${results[conversion_type]} is equal to ${output1} ${unit1}.`;
-        let output_line2 = `The ${results[conversion_type]} is equal to ${output2} ${unit2}.`;
-        document.getElementById("add_lengths_output1").innerHTML = output_line1;
-        document.getElementById("add_lengths_output2").innerHTML = output_line2;
-    }
-}
 
 module.exports = {
     digit_precision,
@@ -214,11 +97,7 @@ module.exports = {
     unit_type_to_conversion_map,
     add_values,
     do_conversion,
-    add_choose_unit_type,
     force_numbers,
     round,
-    default_process_input,
-    addsub_process_input,
-    process_input
 };
   
