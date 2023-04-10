@@ -31,8 +31,10 @@ app.get('/convert/addsub/operation/:operation/value1/:value1/value2/:value2/unit
     let [output1, output2] = conversion.add_values(value1, value2, unit1, unit2, unit_type_to_conversion_map[unit_type]);
     [output1, output2] = conversion.round(output1, output2);
 
+    if (operation === "-") { value2 *= -1; }
+
     // '&' is used to separate the strings
-    res.send(`${value1} ${unit1} + ${value2} ${unit2} is equal to ${output1} ${unit1}.&${value1} ${unit1} + ${value2} ${unit2} is equal to ${output2} ${unit2}.`);
+    res.send(`${value1} ${unit1} ${operation} ${value2} ${unit2} is equal to ${output1} ${unit1}.&${value1} ${unit1} ${operation} ${value2} ${unit2} is equal to ${output2} ${unit2}.`);
 });
   
 app.listen(3000, () => {
