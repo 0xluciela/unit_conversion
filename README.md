@@ -5,7 +5,7 @@ of different (but compatible) units.
 
 ## Dependencies
 
-This tool depends on node.js.
+This tool depends on node.js and express.js.
 
 ## Installation
 
