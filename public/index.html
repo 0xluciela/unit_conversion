@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <head>
 <title>Unit Conversion</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
+	// Covers all regular conversion requests
     function default_process_input(unit_type) {
 		let request = new XMLHttpRequest();
 
@@ -22,6 +22,7 @@
 		request.send();
     }
 
+	// Covers all addition/subtraction requests
     function addsub_process_input(unit_type) {
         let request = new XMLHttpRequest();
 
@@ -50,7 +51,7 @@
     <div id="posts">
 		<h1 class="mastertitle">Unit Conversion Calculator</h2>
 
-
+		<!-- Convert lengths -->
 
       	<div class="post"><br>
 			<h2 class="title">Convert Lengths</h2>
@@ -82,7 +83,7 @@
 			</form>
       	</div>
 
-
+		<!-- Add/subtract lengths -->
 
       	<div class="post">
         	<h2 class="title">Add/Subtract Lengths</h2>
@@ -119,7 +120,7 @@
 			<span class="span" id="addsub_length_output2"> </span><br>
         </div>
 
-
+		<!-- Convert mass -->
 
 		<div class="post"><br>
 			<h2 class="title">Convert Mass</h2>
@@ -151,7 +152,7 @@
 			</form>
       	</div>
 
-
+		<!-- Add/subtract masses -->
 
       	<div class="post">
         	<h2 class="title">Add/Subtract Mass</h2>
