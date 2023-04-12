@@ -40,7 +40,10 @@ app.get('/convert/addsub/operation/:operation/value1/:value1/value2/:value2/unit
     if (operation === "-") { value2 *= -1; }
 
     // '&' is used to separate the strings
-    res.send(`${value1} ${unit1} ${operation} ${value2} ${unit2} is equal to ${output1} ${unit1}.&${value1} ${unit1} ${operation} ${value2} ${unit2} is equal to ${output2} ${unit2}.`);
+    let output_line1 = `${value1} ${unit1} ${operation} ${value2} ${unit2} is equal to ${output1} ${unit1}.`;
+    let output_line2 = `${value1} ${unit1} ${operation} ${value2} ${unit2} is equal to ${output2} ${unit2}.`;
+    let json = {"output1": output_line1, "output2": output_line2};
+    res.send(JSON.stringify(json));
 });
 
 // Listen for connections

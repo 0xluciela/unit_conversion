@@ -5,7 +5,7 @@ of different (but compatible) units.
 
 ## Dependencies
 
-This tool depends on node.js and express.js.
+This tool depends on Node.js, Express, React, and Babel.
 
 ## Installation
 
@@ -29,6 +29,6 @@ be displayed in both units below the fields after pressing "Compute."
 
 ## Assumptions
 
-This tool was developed on Arch Linux.
+This tool was developed on Arch Linux and tested on Chromium 111.0.5563.64.
 
 
